@@ -5,7 +5,7 @@ on:
 
 env:
   FLUTTER_VERSION: '3.0.1'
-  WORKING_FLUTTER_DIRECTORY: 'flutter_project_nickname'
+  WORKING_FLUTTER_DIRECTORY: 'malibu_orange'
   PACKAGE_NAME: 'com.iori.malibu_milk'
 
 jobs:

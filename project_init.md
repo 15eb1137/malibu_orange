@@ -1,11 +1,11 @@
 # Project init
 
-## pubspec.yamlの変更
-
 ## Flutter(Android)のセッティング
 1. /flutter_project_nickname/をプロジェクトコードに変更
-2. `flutter create --org com.iori.[flutter_project_nickname] --platforms android .`を実行
-3. 変更した/flutter_project_nickname/を/flutter/に変更
+2. 名前を変更したFlutterフォルダに移動
+3. `flutter create --org com.iori.[flutter_project_nickname] --platforms android .`を実行
+4. 変更した/flutter_project_nickname/を/flutter/に変更
+5. flutter_project_nicknameを検索し、プロジェクトコードに変更
 
 ## keyの生成
 1. flutterプロジェクトフォルダに移動

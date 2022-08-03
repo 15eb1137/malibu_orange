@@ -28,7 +28,7 @@ if (flutterVersionName == null) {
 }
 
 def dartEnvironmentVariables = [
-        APP_NAME: 'com.iori.flutter_project_nickname',
+        APP_NAME: 'com.iori.malibu_orange',
         APP_SUFFIX: null,
         APP_ENV: 'default'
 ]
@@ -88,7 +88,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.iori.flutter_project_nickname"
+        applicationId "com.iori.malibu_orange"
         resValue "string", "app_name", dartEnvironmentVariables.APP_NAME
         minSdkVersion 21 // flutter.minSdkVersion launcher_iconのバグ対応
         targetSdkVersion flutter.targetSdkVersion

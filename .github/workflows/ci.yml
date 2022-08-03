@@ -8,7 +8,7 @@ on:
 
 env:
   FLUTTER_VERSION: '3.0.1'
-  WORKING_FLUTTER_DIRECTORY: 'flutter_project_nickname'
+  WORKING_FLUTTER_DIRECTORY: 'malibu_orange'
   GIT_EMAIL: '15eb1137@gmail.com'
   GIT_NAME: 'iori tobeta'
 
