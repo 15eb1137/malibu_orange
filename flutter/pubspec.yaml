@@ -49,7 +49,7 @@ flutter:
     - assets/sounds/
 flutter_icons:
   android: true
-  image_path: "assets/images/app-icon.png"
+  image_path: "assets/images/ic_launcher.png"
 flutter_native_splash:
-  # color: "#826599"
-  image: "assets/images/app-icon.png"
+  color: "#d8f3c8"
+  image: "assets/images/ic_launcher.png"
