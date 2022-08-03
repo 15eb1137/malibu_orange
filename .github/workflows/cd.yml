@@ -5,8 +5,8 @@ on:
 
 env:
   FLUTTER_VERSION: '3.0.1'
-  WORKING_FLUTTER_DIRECTORY: 'malibu_orange'
-  PACKAGE_NAME: 'com.iori.malibu_milk'
+  WORKING_FLUTTER_DIRECTORY: 'flutter'
+  PACKAGE_NAME: 'com.iori.malibu_orange'
 
 jobs:
   deploy_android:
@@ -48,7 +48,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: main
-      - run: git checkout -b release
       - name: yq current version
         id: yq-current-version
         uses: mikefarah/yq@master
