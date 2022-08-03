@@ -9,7 +9,7 @@
             "type": "dart",
             "flutterMode": "debug",
             "args": [
-                "--dart-define=APP_NAME=com.iori.flutter_project_nickname.dev",
+                "--dart-define=APP_NAME=com.iori.malibu_orange.dev",
                 "--dart-define=APP_SUFFIX=.dev",
                 // "--dart-define=APP_ENV=debug",
                 "--dart-define=APP_ASSOCIATED_DOMAIN=applinks:com.iori.page.link"
@@ -23,7 +23,7 @@
             "type": "dart",
             "flutterMode": "release",
             "args": [
-                "--dart-define=APP_NAME=com.iori.flutter_project_nickname",
+                "--dart-define=APP_NAME=com.iori.malibu_orange",
                 "--dart-define=APP_ENV=release",
                 "--dart-define=APP_ASSOCIATED_DOMAIN=applinks:com.iori.page.link"
             ]

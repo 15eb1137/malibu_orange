@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "540953790017",
+    "project_id": "com-iori-malibu-orange-dev",
+    "storage_bucket": "com-iori-malibu-orange-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540953790017:android:8d97d72574d9c8cd01a8c0",
+        "android_client_info": {
+          "package_name": "com.iori.malibu_orange.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540953790017-t2clcq9fntp2j944hm6rbkdndo35apuk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJhE8APwanyTmeedmKrZYsf64tBaJnOrE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540953790017-t2clcq9fntp2j944hm6rbkdndo35apuk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
