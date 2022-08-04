@@ -149,11 +149,11 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '11'
-      # - name: setup cache
-      #   uses: actions/cache@v1
-      #   with:
-      #     path: /Users/runner/hostedtoolcache/flutter
-      #     key: ${{ runner.OS }}-flutter-install-cache
+      - name: setup cache
+        uses: actions/cache@v1
+        with:
+          path: /Users/runner/hostedtoolcache/flutter
+          key: ${{ runner.OS }}-flutter-install-cache
       - name: install flutter
         uses: subosito/flutter-action@v1
         with:
