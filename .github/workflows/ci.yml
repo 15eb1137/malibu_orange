@@ -162,13 +162,13 @@ jobs:
       - working-directory: ${{ env.WORKING_FLUTTER_DIRECTORY }}
         run: flutter pub get
       - working-directory: ${{ env.WORKING_FLUTTER_DIRECTORY }}
-        run: echo -n ${{ secrets.KEYSTORE_BASE64 }} | base64 -d > android/app/release.jks
+        run: echo -n ${{ secrets.KEYSTORE_BASE64 }} | base64 -d > android/app/release.p12
       - working-directory: ${{ env.WORKING_FLUTTER_DIRECTORY }}
         run: echo -n ${{ secrets.SERVICE_ACCOUNT_KEY_JSON }} | base64 -d > android/app/service_account_for_pub.json
       - name: create key.properties
         working-directory: ${{ env.WORKING_FLUTTER_DIRECTORY }}
         run: |
-          echo 'storeFile=release.jks' > android/key.properties
+          echo 'storeFile=release.p12' > android/key.properties
           echo 'serviceAccountFile=service_account_for_pub.json' >> android/key.properties
           echo 'storePassword=${{ secrets.KEYSTORE_PASSWORD }}' >> android/key.properties
           echo 'keyPassword=${{ secrets.KEY_PASSWORD }}' >> android/key.properties

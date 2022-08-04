@@ -11,4 +11,5 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+**/*.p12
 service_account_for_pub.json
