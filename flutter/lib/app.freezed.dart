@@ -17,10 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AppModelState {
   GoRouter? get router => throw _privateConstructorUsedError;
+  ThemeMode? get themeMode => throw _privateConstructorUsedError;
   SharedPreferences? get sharedPreferences =>
       throw _privateConstructorUsedError;
-  InAppReview? get inAppReview => throw _privateConstructorUsedError;
-  FirebaseAnalytics? get analytics => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppModelStateCopyWith<AppModelState> get copyWith =>
@@ -34,9 +33,8 @@ abstract class $AppModelStateCopyWith<$Res> {
       _$AppModelStateCopyWithImpl<$Res>;
   $Res call(
       {GoRouter? router,
-      SharedPreferences? sharedPreferences,
-      InAppReview? inAppReview,
-      FirebaseAnalytics? analytics});
+      ThemeMode? themeMode,
+      SharedPreferences? sharedPreferences});
 }
 
 /// @nodoc
@@ -51,27 +49,22 @@ class _$AppModelStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? router = freezed,
+    Object? themeMode = freezed,
     Object? sharedPreferences = freezed,
-    Object? inAppReview = freezed,
-    Object? analytics = freezed,
   }) {
     return _then(_value.copyWith(
       router: router == freezed
           ? _value.router
           : router // ignore: cast_nullable_to_non_nullable
               as GoRouter?,
+      themeMode: themeMode == freezed
+          ? _value.themeMode
+          : themeMode // ignore: cast_nullable_to_non_nullable
+              as ThemeMode?,
       sharedPreferences: sharedPreferences == freezed
           ? _value.sharedPreferences
           : sharedPreferences // ignore: cast_nullable_to_non_nullable
               as SharedPreferences?,
-      inAppReview: inAppReview == freezed
-          ? _value.inAppReview
-          : inAppReview // ignore: cast_nullable_to_non_nullable
-              as InAppReview?,
-      analytics: analytics == freezed
-          ? _value.analytics
-          : analytics // ignore: cast_nullable_to_non_nullable
-              as FirebaseAnalytics?,
     ));
   }
 }
@@ -85,9 +78,8 @@ abstract class _$$_AppModelStateCopyWith<$Res>
   @override
   $Res call(
       {GoRouter? router,
-      SharedPreferences? sharedPreferences,
-      InAppReview? inAppReview,
-      FirebaseAnalytics? analytics});
+      ThemeMode? themeMode,
+      SharedPreferences? sharedPreferences});
 }
 
 /// @nodoc
@@ -104,27 +96,22 @@ class __$$_AppModelStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? router = freezed,
+    Object? themeMode = freezed,
     Object? sharedPreferences = freezed,
-    Object? inAppReview = freezed,
-    Object? analytics = freezed,
   }) {
     return _then(_$_AppModelState(
       router == freezed
           ? _value.router
           : router // ignore: cast_nullable_to_non_nullable
               as GoRouter?,
+      themeMode == freezed
+          ? _value.themeMode
+          : themeMode // ignore: cast_nullable_to_non_nullable
+              as ThemeMode?,
       sharedPreferences == freezed
           ? _value.sharedPreferences
           : sharedPreferences // ignore: cast_nullable_to_non_nullable
               as SharedPreferences?,
-      inAppReview == freezed
-          ? _value.inAppReview
-          : inAppReview // ignore: cast_nullable_to_non_nullable
-              as InAppReview?,
-      analytics == freezed
-          ? _value.analytics
-          : analytics // ignore: cast_nullable_to_non_nullable
-              as FirebaseAnalytics?,
     ));
   }
 }
@@ -132,21 +119,18 @@ class __$$_AppModelStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AppModelState with DiagnosticableTreeMixin implements _AppModelState {
-  const _$_AppModelState(
-      this.router, this.sharedPreferences, this.inAppReview, this.analytics);
+  const _$_AppModelState(this.router, this.themeMode, this.sharedPreferences);
 
   @override
   final GoRouter? router;
   @override
+  final ThemeMode? themeMode;
+  @override
   final SharedPreferences? sharedPreferences;
-  @override
-  final InAppReview? inAppReview;
-  @override
-  final FirebaseAnalytics? analytics;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppModelState(router: $router, sharedPreferences: $sharedPreferences, inAppReview: $inAppReview, analytics: $analytics)';
+    return 'AppModelState(router: $router, themeMode: $themeMode, sharedPreferences: $sharedPreferences)';
   }
 
   @override
@@ -155,9 +139,8 @@ class _$_AppModelState with DiagnosticableTreeMixin implements _AppModelState {
     properties
       ..add(DiagnosticsProperty('type', 'AppModelState'))
       ..add(DiagnosticsProperty('router', router))
-      ..add(DiagnosticsProperty('sharedPreferences', sharedPreferences))
-      ..add(DiagnosticsProperty('inAppReview', inAppReview))
-      ..add(DiagnosticsProperty('analytics', analytics));
+      ..add(DiagnosticsProperty('themeMode', themeMode))
+      ..add(DiagnosticsProperty('sharedPreferences', sharedPreferences));
   }
 
   @override
@@ -166,20 +149,17 @@ class _$_AppModelState with DiagnosticableTreeMixin implements _AppModelState {
         (other.runtimeType == runtimeType &&
             other is _$_AppModelState &&
             const DeepCollectionEquality().equals(other.router, router) &&
+            const DeepCollectionEquality().equals(other.themeMode, themeMode) &&
             const DeepCollectionEquality()
-                .equals(other.sharedPreferences, sharedPreferences) &&
-            const DeepCollectionEquality()
-                .equals(other.inAppReview, inAppReview) &&
-            const DeepCollectionEquality().equals(other.analytics, analytics));
+                .equals(other.sharedPreferences, sharedPreferences));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(router),
-      const DeepCollectionEquality().hash(sharedPreferences),
-      const DeepCollectionEquality().hash(inAppReview),
-      const DeepCollectionEquality().hash(analytics));
+      const DeepCollectionEquality().hash(themeMode),
+      const DeepCollectionEquality().hash(sharedPreferences));
 
   @JsonKey(ignore: true)
   @override
@@ -190,18 +170,15 @@ class _$_AppModelState with DiagnosticableTreeMixin implements _AppModelState {
 abstract class _AppModelState implements AppModelState {
   const factory _AppModelState(
       final GoRouter? router,
-      final SharedPreferences? sharedPreferences,
-      final InAppReview? inAppReview,
-      final FirebaseAnalytics? analytics) = _$_AppModelState;
+      final ThemeMode? themeMode,
+      final SharedPreferences? sharedPreferences) = _$_AppModelState;
 
   @override
   GoRouter? get router;
   @override
+  ThemeMode? get themeMode;
+  @override
   SharedPreferences? get sharedPreferences;
-  @override
-  InAppReview? get inAppReview;
-  @override
-  FirebaseAnalytics? get analytics;
   @override
   @JsonKey(ignore: true)
   _$$_AppModelStateCopyWith<_$_AppModelState> get copyWith =>

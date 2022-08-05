@@ -32,6 +32,8 @@ dependencies:
   rive: ^0.9.0
   audioplayers: ^1.0.1
   in_app_review: ^2.0.4
+  environment_sensors: ^0.2.0
+  charts_flutter: ^0.12.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
