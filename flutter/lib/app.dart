@@ -1,73 +1,66 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
-import 'package:in_app_review/in_app_review.dart';
+import 'package:malibu_orange/pages/brightness.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app.freezed.dart';
 
 final appModelProvider =
-    StateNotifierProvider<AppModelStateNotifier, AppModelState>(
-        (ref) => AppModelStateNotifier()
+    StateNotifierProvider<AppModelStateNotifier, AppModelState>((ref) {
+  final sharedPreferences = ref.watch(sharedPreferencesProvider);
+  return sharedPreferences.when(
+      data: (sharedPreferences) {
+        final isThemeModeDark = sharedPreferences.getBool('isThemeModeDark');
+        return AppModelStateNotifier()
           ..init(
-              router: GoRouter(
-                initialLocation: '/xxxxx',
-                routes: [
-                  // GoRoute(
-                  //     path: '/setting',
-                  //     builder: (context, state) => const SettingView()),
-                ],
-              ),
-              // sharedPreferences: SharedPreferences.getInstance(),
-              // inAppReview: InAppReview.instance,
-              analytics: FirebaseAnalytics.instance));
+              sharedPreferences: sharedPreferences,
+              themeMode: isThemeModeDark != null
+                  ? (isThemeModeDark ? ThemeMode.dark : ThemeMode.light)
+                  : ThemeMode.system);
+      },
+      error: (err, _) => throw Exception(err),
+      loading: () => AppModelStateNotifier());
+});
 
 class AppModelStateNotifier extends StateNotifier<AppModelState> {
-  AppModelStateNotifier() : super(const AppModelState(null, null, null, null));
+  AppModelStateNotifier() : super(const AppModelState(null, null, null));
 
   Future<void> init(
-          {GoRouter? router,
-          Future<SharedPreferences>? sharedPreferences,
-          InAppReview? inAppReview,
-          FirebaseAnalytics? analytics}) async =>
-      state = state.copyWith(
-          router: router,
-          sharedPreferences: await sharedPreferences,
-          inAppReview: inAppReview,
-          analytics: analytics);
-
-  Future<void> requestReview() async {
-    final inAppReview = state.inAppReview;
-    if (inAppReview != null) await inAppReview.requestReview();
+      {GoRouter? router,
+      ThemeMode? themeMode,
+      SharedPreferences? sharedPreferences}) async {
+    state = state.copyWith(
+        router: router ??
+            GoRouter(
+              initialLocation: '/brightness',
+              routes: [
+                GoRoute(
+                    path: '/brightness',
+                    builder: (context, state) => const BrightnessView()),
+              ],
+            ),
+        themeMode: themeMode,
+        sharedPreferences: sharedPreferences);
   }
 
-  void setIsDarkMode(bool isDarkModeActive) {
-    final sharedPreferences = state.sharedPreferences;
-    if (sharedPreferences != null) {
-      sharedPreferences.setBool('isDarkMode', isDarkModeActive);
-    }
-  }
-
-  Future<void> sendAnalyticsEvent(
-      String eventName, Map<String, dynamic> params) async {
-    final analytics = state.analytics;
-    if (analytics != null) {
-      await analytics.logEvent(name: eventName, parameters: params);
-    }
+  void setThemeMode() {
+    final newTheme =
+        state.themeMode != ThemeMode.dark ? ThemeMode.dark : ThemeMode.light;
+    state = state.copyWith(themeMode: newTheme);
   }
 }
 
 @freezed
 abstract class AppModelState with _$AppModelState {
-  const factory AppModelState(
-      GoRouter? router,
-      SharedPreferences? sharedPreferences,
-      InAppReview? inAppReview,
-      FirebaseAnalytics? analytics) = _AppModelState;
+  const factory AppModelState(GoRouter? router, ThemeMode? themeMode,
+      SharedPreferences? sharedPreferences) = _AppModelState;
 }
+
+final sharedPreferencesProvider =
+    FutureProvider((ref) async => SharedPreferences.getInstance());
 
 class App extends ConsumerWidget {
   const App({Key? key}) : super(key: key);
@@ -76,12 +69,40 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(appModelProvider.select((model) => model.router))!;
     return MaterialApp.router(
-      title: '',
-      theme:
-          ThemeData(primarySwatch: Colors.green, brightness: Brightness.light),
-      darkTheme:
-          ThemeData(primarySwatch: Colors.green, brightness: Brightness.dark),
-      // themeMode: ref.watch(settingModelProvider.select((model) => model.themeMode)),
+      title: 'お部屋の明るさ測定',
+      theme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch(
+                  primarySwatch: const MaterialColor(0xFFFFFFFF, <int, Color>{
+                    50: Color(0xFFFFFFFF),
+                    100: Color(0xFFFFFFFF),
+                    200: Color(0xFFFFFFFF),
+                    300: Color(0xFFFFFFFF),
+                    400: Color(0xFFFFFFFF),
+                    500: Color(0xFFFFFFFF),
+                    600: Color(0xFFFFFFFF),
+                    700: Color(0xFFFFFFFF),
+                    800: Color(0xFFFFFFFF),
+                    900: Color(0xFFFFFFFF),
+                  }),
+                  brightness: Brightness.light)
+              .copyWith(secondary: Colors.blueGrey, onSecondary: Colors.white)),
+      darkTheme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch(
+                  primarySwatch: const MaterialColor(0x00000000, <int, Color>{
+                    50: Color(0x00000000),
+                    100: Color(0x00000000),
+                    200: Color(0x00000000),
+                    300: Color(0x00000000),
+                    400: Color(0x00000000),
+                    500: Color(0x00000000),
+                    600: Color(0x00000000),
+                    700: Color(0x00000000),
+                    800: Color(0x00000000),
+                    900: Color(0x00000000),
+                  }),
+                  brightness: Brightness.dark)
+              .copyWith(secondary: Colors.blueGrey, onSecondary: Colors.white)),
+      themeMode: ref.watch(appModelProvider.select((model) => model.themeMode)),
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
       debugShowCheckedModeBanner: false,
