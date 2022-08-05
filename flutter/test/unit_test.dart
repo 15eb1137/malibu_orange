@@ -6,7 +6,7 @@ import 'test_data.dart';
 // import 'test_data.dart';
 
 void main() {
-    group('Brightness model tests', (() {
+  group('Brightness model tests', (() {
     final testData = BrightnessModelTestData();
 
     test('Brightness model brightness test 1', () async {
@@ -41,8 +41,7 @@ void main() {
       await container.read(brightnessStreamProvider.future);
       expect(container.read(brightnessModelProvider).brightness, 29.0);
     });
-    test('Brightness model isBrightnessSensorAvailable test loading',
-        () async {
+    test('Brightness model isBrightnessSensorAvailable test loading', () async {
       final container = testData.prepareDependency();
       expect(
           container.read(brightnessModelProvider).isBrightnessSensorAvailable,
@@ -65,5 +64,4 @@ void main() {
           true);
     });
   }));
-
 }

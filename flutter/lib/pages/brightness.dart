@@ -23,8 +23,7 @@ final brightnessModelProvider =
       loading: () => BrightnessModelStateNotifier());
 });
 
-class BrightnessModelStateNotifier
-    extends StateNotifier<BrightnessModelState> {
+class BrightnessModelStateNotifier extends StateNotifier<BrightnessModelState> {
   BrightnessModelStateNotifier()
       : super(const BrightnessModelState(null, null));
 
@@ -46,8 +45,7 @@ final brightnessStreamProvider =
     StreamProvider<double?>((ref) => EnvironmentSensors().light);
 
 final isBrightnessSensorAvailableProvider = FutureProvider<bool?>(
-    (ref) async =>
-        EnvironmentSensors().getSensorAvailable(SensorType.Light));
+    (ref) async => EnvironmentSensors().getSensorAvailable(SensorType.Light));
 
 class BrightnessView extends ConsumerWidget {
   const BrightnessView({Key? key}) : super(key: key);
