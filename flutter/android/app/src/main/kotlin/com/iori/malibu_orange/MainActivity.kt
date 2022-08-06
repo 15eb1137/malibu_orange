@@ -1,4 +1,4 @@
-package com.iori.malibu_orange.malibu_orange
+package com.iori.malibu_orange
 
 import io.flutter.embedding.android.FlutterActivity
 
