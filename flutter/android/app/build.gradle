@@ -109,7 +109,7 @@ android {
     }
 
     play {
-       serviceAccountCredentials = file(keystoreProperties['serviceAccountFile'])
+       serviceAccountCredentials = keystoreProperties['serviceAccountFile'] ? file(keystoreProperties['serviceAccountFile']) : null
     }
 }
 

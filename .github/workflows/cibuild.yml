@@ -14,36 +14,6 @@ env:
 
 
 jobs:
-  flutter_tests:
-    name: Flutter Tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.head_ref }}
-      - uses: subosito/flutter-action@v1
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          channel: 'stable'
-      - working-directory: ${{ env.WORKING_FLUTTER_DIRECTORY }}
-        run: flutter pub get
-      - name: Format check
-        working-directory: ${{ env.WORKING_FLUTTER_DIRECTORY }}
-        if: always()
-        run: flutter format ./lib/ ./test/ -n --set-exit-if-changed
-      - name: Lint Check
-        working-directory: ${{ env.WORKING_FLUTTER_DIRECTORY }}
-        if: always()
-        run: flutter analyze
-      - name: Unit Tests
-        working-directory: ${{ env.WORKING_FLUTTER_DIRECTORY }}
-        if: always()
-        run: flutter test test/unit_test.dart
-      - name: Widget Tests
-        working-directory: ${{ env.WORKING_FLUTTER_DIRECTORY }}
-        if: always()
-        run: flutter test test/widget_test.dart
   version_increment:
     name: Flutter Version Increment
     permissions:
