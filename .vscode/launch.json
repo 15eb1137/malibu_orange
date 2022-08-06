@@ -11,7 +11,7 @@
             "args": [
                 "--dart-define=APP_NAME=com.iori.malibu_orange.dev",
                 "--dart-define=APP_SUFFIX=.dev",
-                // "--dart-define=APP_ENV=debug",
+                "--dart-define=APP_ENV=debug",
                 "--dart-define=APP_ASSOCIATED_DOMAIN=applinks:com.iori.page.link"
             ]
         },
