@@ -44,6 +44,7 @@ if (project.hasProperty('dart-defines')) {
 
 task copyGoogleServicesJson(type: Copy) {
     from "src/${dartEnvironmentVariables.APP_ENV}/google-services.json"
+    into './'
 }
 
 tasks.whenTaskAdded { task ->
