@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
-import 'package:malibu_orange/pages/brightness.dart';
+import 'package:malibu_orange/components/transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app.freezed.dart';
@@ -39,7 +39,8 @@ class AppModelStateNotifier extends StateNotifier<AppModelState> {
               routes: [
                 GoRoute(
                     path: '/brightness',
-                    builder: (context, state) => const BrightnessView()),
+                    builder: (context, state) =>
+                        const Transition() /*BrightnessView()*/),
               ],
             ),
         themeMode: themeMode,
