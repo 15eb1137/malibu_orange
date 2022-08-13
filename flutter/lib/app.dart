@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:malibu_orange/components/transition.dart';
+import 'package:malibu_orange/pages/brightness.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app.freezed.dart';
@@ -25,6 +26,17 @@ final appModelProvider =
       loading: () => AppModelStateNotifier());
 });
 
+class Title extends StatelessWidget {
+  const Title({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Container(
+      color: Colors.blueGrey,
+      child: TextButton(
+          onPressed: () => context.go('/brightness'),
+          child: const Text('brightness')));
+}
+
 class AppModelStateNotifier extends StateNotifier<AppModelState> {
   AppModelStateNotifier() : super(const AppModelState(null, null, null));
 
@@ -35,12 +47,24 @@ class AppModelStateNotifier extends StateNotifier<AppModelState> {
     state = state.copyWith(
         router: router ??
             GoRouter(
-              initialLocation: '/brightness',
+              initialLocation: '/title',
               routes: [
                 GoRoute(
+                    path: '/title', builder: (context, state) => const Title()),
+                GoRoute(
                     path: '/brightness',
-                    builder: (context, state) =>
-                        const Transition() /*BrightnessView()*/),
+                    pageBuilder: (context, state) {
+                      const duration = Duration(seconds: 4);
+                      return CustomTransitionPage(
+                          transitionDuration: duration,
+                          child: const BrightnessView(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) =>
+                                  Transition(
+                                      duration: duration,
+                                      animation: animation,
+                                      child: child));
+                    }),
               ],
             ),
         themeMode: themeMode,
