@@ -4,8 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:malibu_orange/app.dart';
 import 'package:malibu_orange/components/app_bar.dart';
-import 'package:malibu_orange/components/brightness_info_bar.dart';
-import 'package:malibu_orange/components/brightness_info_circle.dart';
 
 part 'brightness.freezed.dart';
 
@@ -53,12 +51,22 @@ class BrightnessView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appModelController = ref.watch(appModelProvider.notifier);
+    final isBrightnessSensorAvailable =
+        ref.watch(brightnessModelProvider).isBrightnessSensorAvailable;
+    final brightness = ref.watch(brightnessModelProvider).brightness ?? 0;
+    Widget getBrightnessImage() => isBrightnessSensorAvailable == null
+        ? Image.asset('assets/images/loading.png', fit: BoxFit.cover)
+        : isBrightnessSensorAvailable
+            ? brightness > 300
+                ? Image.asset('assets/images/bright.png', fit: BoxFit.cover)
+                : Image.asset('assets/images/middark.png', fit: BoxFit.cover)
+            : Image.asset('assets/images/failed.png', fit: BoxFit.cover);
     return Scaffold(
       appBar: const AppBarComponent(title: 'お部屋の明るさ測定'),
-      body: Stack(children: const [
-        BrightnessInfoBar(),
-        BrightnessInfoCircle(),
-      ]),
+      body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: getBrightnessImage()),
       floatingActionButton: FloatingActionButton(
           onPressed: () => appModelController.setThemeMode(),
           child: const Icon(Icons.lightbulb)),
