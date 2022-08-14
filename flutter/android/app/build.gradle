@@ -4,12 +4,8 @@ if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader('UTF-8') { reader ->
         localProperties.load(reader)
     }
-}
-
-def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('key.properties')
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+} else {
+    throw new GradleException('localPropertiesFile not exist.')
 }
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
@@ -56,6 +52,14 @@ tasks.whenTaskAdded { task ->
     }
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+} else {
+    throw new GradleException('keystorePropertiesFile not exist.')
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: "com.github.triplet.play"
@@ -79,6 +83,15 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+    defaultConfig {
+        applicationId "com.iori.malibu_orange"
+        resValue "string", "app_name", dartEnvironmentVariables.APP_NAME
+        minSdkVersion 21 // flutter.minSdkVersion launcher_iconのバグでlocal.propertiesの値が使えないため
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+
     signingConfigs {
         release {
             keyPassword keystoreProperties['keyPassword']
@@ -86,15 +99,6 @@ android {
             keyAlias keystoreProperties['keyAlias']
             storePassword keystoreProperties['storePassword']
         }
-    }
-
-    defaultConfig {
-        applicationId "com.iori.malibu_orange"
-        resValue "string", "app_name", dartEnvironmentVariables.APP_NAME
-        minSdkVersion 21 // flutter.minSdkVersion launcher_iconのバグ対応
-        targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
     }
 
     buildTypes {
@@ -108,7 +112,6 @@ android {
             }
         }
     }
-
     play {
        serviceAccountCredentials = keystoreProperties['serviceAccountFile'] ? file(keystoreProperties['serviceAccountFile']) : null
     }
@@ -120,7 +123,6 @@ flutter {
 
 dependencies {
     def billing_version = "5.0.0"
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // implementation 'com.google.android.gms:play-services-ads:21.0.0'
     implementation "com.android.billingclient:billing:$billing_version"

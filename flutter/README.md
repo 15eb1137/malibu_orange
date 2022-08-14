@@ -1,4 +1,4 @@
-# project_nickname
+# malibu_orange
 
 A new Flutter project.
 
