@@ -54,7 +54,7 @@ class AppModelStateNotifier extends StateNotifier<AppModelState> {
                 GoRoute(
                     path: '/brightness',
                     pageBuilder: (context, state) {
-                      const duration = Duration(seconds: 4);
+                      const duration = Duration(seconds: 3);
                       return CustomTransitionPage(
                           transitionDuration: duration,
                           child: const BrightnessView(),
