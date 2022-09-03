@@ -23,20 +23,31 @@ final brightnessModelProvider =
 
 class BrightnessModelStateNotifier extends StateNotifier<BrightnessModelState> {
   BrightnessModelStateNotifier()
-      : super(const BrightnessModelState(null, null));
+      : super(const BrightnessModelState(null, null, null));
 
   void setBrightness(double? brightness) =>
       state = state.copyWith(brightness: brightness);
   void setIsBrightnessSensorAvailable(bool? isBrightnessSensorAvailable) =>
       state = state.copyWith(
           isBrightnessSensorAvailable: isBrightnessSensorAvailable);
+  void changeWorkingMode() {
+    if (state.workingMode == WorkingMode.work) {
+      state = state.copyWith(workingMode: WorkingMode.sleep);
+    }
+    if (state.workingMode == WorkingMode.sleep) {
+      state = state.copyWith(workingMode: WorkingMode.work);
+    }
+  }
 }
+
+enum WorkingMode { work, sleep }
 
 @freezed
 class BrightnessModelState with _$BrightnessModelState {
   const factory BrightnessModelState(
-          double? brightness, bool? isBrightnessSensorAvailable) =
-      _BrightnessModelState;
+      double? brightness,
+      bool? isBrightnessSensorAvailable,
+      WorkingMode? workingMode) = _BrightnessModelState;
 }
 
 final brightnessStreamProvider =
