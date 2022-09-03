@@ -2,7 +2,6 @@ import 'package:environment_sensors/environment_sensors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:malibu_orange/app.dart';
 import 'package:malibu_orange/components/app_bar.dart';
 
 part 'brightness.freezed.dart';
@@ -12,12 +11,11 @@ final brightnessModelProvider =
         (ref) {
   final isBrightnessSensorAvailable =
       ref.watch(isBrightnessSensorAvailableProvider);
-  final brightness = ref.watch(brightnessStreamProvider).value;
   return isBrightnessSensorAvailable.when(
       data: (data) => BrightnessModelStateNotifier()
-        ..setBrightness(brightness)
+        ..setBrightness(0.0)
         ..setIsBrightnessSensorAvailable(data)
-        ..changeWorkingMode(),
+        ..setWorkingMode(WorkingMode.work),
       error: (err, _) => throw Exception(err),
       loading: () => BrightnessModelStateNotifier());
 });
@@ -31,18 +29,8 @@ class BrightnessModelStateNotifier extends StateNotifier<BrightnessModelState> {
   void setIsBrightnessSensorAvailable(bool? isBrightnessSensorAvailable) =>
       state = state.copyWith(
           isBrightnessSensorAvailable: isBrightnessSensorAvailable);
-  void changeWorkingMode() {
-    switch (state.workingMode) {
-      case WorkingMode.work:
-        state = state.copyWith(workingMode: WorkingMode.sleep);
-        break;
-      case WorkingMode.sleep:
-        state = state.copyWith(workingMode: WorkingMode.work);
-        break;
-      default:
-        state = state.copyWith(workingMode: WorkingMode.work);
-    }
-  }
+  void setWorkingMode(WorkingMode workingMode) =>
+      state = state.copyWith(workingMode: workingMode);
 }
 
 enum WorkingMode { work, sleep }
@@ -66,16 +54,28 @@ class BrightnessView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appModelController = ref.watch(appModelProvider.notifier);
-    final isBrightnessSensorAvailable =
-        ref.watch(brightnessModelProvider).isBrightnessSensorAvailable;
-    final brightness = ref.watch(brightnessModelProvider).brightness ?? 0;
+    final brightnessModelController =
+        ref.watch(brightnessModelProvider.notifier);
+    final isBrightnessSensorAvailable = ref.watch(brightnessModelProvider
+        .select((model) => model.isBrightnessSensorAvailable));
+    ref.watch(brightnessStreamProvider).whenData(
+        (brightness) => brightnessModelController.setBrightness(brightness));
+    final brightness = ref.watch(
+        brightnessModelProvider.select((model) => model.brightness ?? 0));
+    final workingMode =
+        ref.watch(brightnessModelProvider.select((model) => model.workingMode));
     Widget getBrightnessImage() => isBrightnessSensorAvailable == null
         ? Image.asset('assets/images/loading.png', fit: BoxFit.cover)
-        : isBrightnessSensorAvailable
-            ? brightness > 300
-                ? Image.asset('assets/images/bright.png', fit: BoxFit.cover)
-                : Image.asset('assets/images/middark.png', fit: BoxFit.cover)
+        : isBrightnessSensorAvailable && workingMode != null
+            ? workingMode == WorkingMode.work
+                ? brightness > 300
+                    ? Image.asset('assets/images/bright.png', fit: BoxFit.cover)
+                    : Image.asset('assets/images/middark.png',
+                        fit: BoxFit.cover)
+                : brightness < 50
+                    ? Image.asset('assets/images/dark.png', fit: BoxFit.cover)
+                    : Image.asset('assets/images/midlight.png',
+                        fit: BoxFit.cover)
             : Image.asset('assets/images/failed.png', fit: BoxFit.cover);
     return Scaffold(
       appBar: const AppBarComponent(title: 'お部屋の明るさ測定'),
@@ -84,7 +84,12 @@ class BrightnessView extends ConsumerWidget {
           height: MediaQuery.of(context).size.height,
           child: getBrightnessImage()),
       floatingActionButton: FloatingActionButton(
-          onPressed: () => appModelController.setThemeMode(),
+          onPressed: () {
+            final newWorkingMode = workingMode == WorkingMode.work
+                ? WorkingMode.sleep
+                : WorkingMode.work;
+            brightnessModelController.setWorkingMode(newWorkingMode);
+          },
           child: const Icon(Icons.lightbulb)),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
     );

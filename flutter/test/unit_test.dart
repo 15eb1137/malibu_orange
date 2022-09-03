@@ -68,10 +68,14 @@ void main() {
       await container.read(isBrightnessSensorAvailableProvider.future);
       expect(container.read(brightnessModelProvider).workingMode,
           WorkingMode.work);
-      container.read(brightnessModelProvider.notifier).changeWorkingMode();
+      container
+          .read(brightnessModelProvider.notifier)
+          .setWorkingMode(WorkingMode.sleep);
       expect(container.read(brightnessModelProvider).workingMode,
           WorkingMode.sleep);
-      container.read(brightnessModelProvider.notifier).changeWorkingMode();
+      container
+          .read(brightnessModelProvider.notifier)
+          .setWorkingMode(WorkingMode.work);
       expect(container.read(brightnessModelProvider).workingMode,
           WorkingMode.work);
     });
