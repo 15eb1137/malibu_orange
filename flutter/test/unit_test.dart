@@ -65,6 +65,7 @@ void main() {
     });
     test('Brightness model working mode test', () async {
       final container = testData.prepareDependency();
+      await container.read(isBrightnessSensorAvailableProvider.future);
       expect(container.read(brightnessModelProvider).workingMode,
           WorkingMode.work);
       container.read(brightnessModelProvider.notifier).changeWorkingMode();

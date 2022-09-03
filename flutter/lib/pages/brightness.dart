@@ -16,7 +16,8 @@ final brightnessModelProvider =
   return isBrightnessSensorAvailable.when(
       data: (data) => BrightnessModelStateNotifier()
         ..setBrightness(brightness)
-        ..setIsBrightnessSensorAvailable(data),
+        ..setIsBrightnessSensorAvailable(data)
+        ..changeWorkingMode(),
       error: (err, _) => throw Exception(err),
       loading: () => BrightnessModelStateNotifier());
 });
@@ -31,11 +32,15 @@ class BrightnessModelStateNotifier extends StateNotifier<BrightnessModelState> {
       state = state.copyWith(
           isBrightnessSensorAvailable: isBrightnessSensorAvailable);
   void changeWorkingMode() {
-    if (state.workingMode == WorkingMode.work) {
-      state = state.copyWith(workingMode: WorkingMode.sleep);
-    }
-    if (state.workingMode == WorkingMode.sleep) {
-      state = state.copyWith(workingMode: WorkingMode.work);
+    switch (state.workingMode) {
+      case WorkingMode.work:
+        state = state.copyWith(workingMode: WorkingMode.sleep);
+        break;
+      case WorkingMode.sleep:
+        state = state.copyWith(workingMode: WorkingMode.work);
+        break;
+      default:
+        state = state.copyWith(workingMode: WorkingMode.work);
     }
   }
 }
