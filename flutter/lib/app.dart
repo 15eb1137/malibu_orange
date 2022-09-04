@@ -40,7 +40,8 @@ class AppModelStateNotifier extends StateNotifier<AppModelState> {
               initialLocation: '/title',
               routes: [
                 GoRoute(
-                    path: '/title', builder: (context, state) => const AppTitle()),
+                    path: '/title',
+                    builder: (context, state) => const AppTitle()),
                 GoRoute(
                     path: '/brightness',
                     pageBuilder: (context, state) {
