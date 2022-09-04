@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$BrightnessModelState {
   double? get brightness => throw _privateConstructorUsedError;
   bool? get isBrightnessSensorAvailable => throw _privateConstructorUsedError;
+  WorkingMode? get workingMode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $BrightnessModelStateCopyWith<BrightnessModelState> get copyWith =>
@@ -29,7 +30,10 @@ abstract class $BrightnessModelStateCopyWith<$Res> {
   factory $BrightnessModelStateCopyWith(BrightnessModelState value,
           $Res Function(BrightnessModelState) then) =
       _$BrightnessModelStateCopyWithImpl<$Res>;
-  $Res call({double? brightness, bool? isBrightnessSensorAvailable});
+  $Res call(
+      {double? brightness,
+      bool? isBrightnessSensorAvailable,
+      WorkingMode? workingMode});
 }
 
 /// @nodoc
@@ -45,6 +49,7 @@ class _$BrightnessModelStateCopyWithImpl<$Res>
   $Res call({
     Object? brightness = freezed,
     Object? isBrightnessSensorAvailable = freezed,
+    Object? workingMode = freezed,
   }) {
     return _then(_value.copyWith(
       brightness: brightness == freezed
@@ -55,6 +60,10 @@ class _$BrightnessModelStateCopyWithImpl<$Res>
           ? _value.isBrightnessSensorAvailable
           : isBrightnessSensorAvailable // ignore: cast_nullable_to_non_nullable
               as bool?,
+      workingMode: workingMode == freezed
+          ? _value.workingMode
+          : workingMode // ignore: cast_nullable_to_non_nullable
+              as WorkingMode?,
     ));
   }
 }
@@ -66,7 +75,10 @@ abstract class _$$_BrightnessModelStateCopyWith<$Res>
           $Res Function(_$_BrightnessModelState) then) =
       __$$_BrightnessModelStateCopyWithImpl<$Res>;
   @override
-  $Res call({double? brightness, bool? isBrightnessSensorAvailable});
+  $Res call(
+      {double? brightness,
+      bool? isBrightnessSensorAvailable,
+      WorkingMode? workingMode});
 }
 
 /// @nodoc
@@ -84,6 +96,7 @@ class __$$_BrightnessModelStateCopyWithImpl<$Res>
   $Res call({
     Object? brightness = freezed,
     Object? isBrightnessSensorAvailable = freezed,
+    Object? workingMode = freezed,
   }) {
     return _then(_$_BrightnessModelState(
       brightness == freezed
@@ -94,6 +107,10 @@ class __$$_BrightnessModelStateCopyWithImpl<$Res>
           ? _value.isBrightnessSensorAvailable
           : isBrightnessSensorAvailable // ignore: cast_nullable_to_non_nullable
               as bool?,
+      workingMode == freezed
+          ? _value.workingMode
+          : workingMode // ignore: cast_nullable_to_non_nullable
+              as WorkingMode?,
     ));
   }
 }
@@ -102,16 +119,18 @@ class __$$_BrightnessModelStateCopyWithImpl<$Res>
 
 class _$_BrightnessModelState implements _BrightnessModelState {
   const _$_BrightnessModelState(
-      this.brightness, this.isBrightnessSensorAvailable);
+      this.brightness, this.isBrightnessSensorAvailable, this.workingMode);
 
   @override
   final double? brightness;
   @override
   final bool? isBrightnessSensorAvailable;
+  @override
+  final WorkingMode? workingMode;
 
   @override
   String toString() {
-    return 'BrightnessModelState(brightness: $brightness, isBrightnessSensorAvailable: $isBrightnessSensorAvailable)';
+    return 'BrightnessModelState(brightness: $brightness, isBrightnessSensorAvailable: $isBrightnessSensorAvailable, workingMode: $workingMode)';
   }
 
   @override
@@ -123,14 +142,17 @@ class _$_BrightnessModelState implements _BrightnessModelState {
                 .equals(other.brightness, brightness) &&
             const DeepCollectionEquality().equals(
                 other.isBrightnessSensorAvailable,
-                isBrightnessSensorAvailable));
+                isBrightnessSensorAvailable) &&
+            const DeepCollectionEquality()
+                .equals(other.workingMode, workingMode));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(brightness),
-      const DeepCollectionEquality().hash(isBrightnessSensorAvailable));
+      const DeepCollectionEquality().hash(isBrightnessSensorAvailable),
+      const DeepCollectionEquality().hash(workingMode));
 
   @JsonKey(ignore: true)
   @override
@@ -141,13 +163,16 @@ class _$_BrightnessModelState implements _BrightnessModelState {
 
 abstract class _BrightnessModelState implements BrightnessModelState {
   const factory _BrightnessModelState(
-          final double? brightness, final bool? isBrightnessSensorAvailable) =
-      _$_BrightnessModelState;
+      final double? brightness,
+      final bool? isBrightnessSensorAvailable,
+      final WorkingMode? workingMode) = _$_BrightnessModelState;
 
   @override
   double? get brightness;
   @override
   bool? get isBrightnessSensorAvailable;
+  @override
+  WorkingMode? get workingMode;
   @override
   @JsonKey(ignore: true)
   _$$_BrightnessModelStateCopyWith<_$_BrightnessModelState> get copyWith =>

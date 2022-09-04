@@ -63,5 +63,21 @@ void main() {
           container.read(brightnessModelProvider).isBrightnessSensorAvailable,
           true);
     });
+    test('Brightness model working mode test', () async {
+      final container = testData.prepareDependency();
+      await container.read(isBrightnessSensorAvailableProvider.future);
+      expect(container.read(brightnessModelProvider).workingMode,
+          WorkingMode.work);
+      container
+          .read(brightnessModelProvider.notifier)
+          .setWorkingMode(WorkingMode.sleep);
+      expect(container.read(brightnessModelProvider).workingMode,
+          WorkingMode.sleep);
+      container
+          .read(brightnessModelProvider.notifier)
+          .setWorkingMode(WorkingMode.work);
+      expect(container.read(brightnessModelProvider).workingMode,
+          WorkingMode.work);
+    });
   }));
 }
