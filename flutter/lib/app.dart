@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:malibu_orange/components/transition.dart';
 import 'package:malibu_orange/pages/brightness.dart';
+import 'package:malibu_orange/pages/title.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app.freezed.dart';
@@ -26,17 +27,6 @@ final appModelProvider =
       loading: () => AppModelStateNotifier());
 });
 
-class Title extends StatelessWidget {
-  const Title({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => Container(
-      color: Colors.blueGrey,
-      child: TextButton(
-          onPressed: () => context.go('/brightness'),
-          child: const Text('brightness')));
-}
-
 class AppModelStateNotifier extends StateNotifier<AppModelState> {
   AppModelStateNotifier() : super(const AppModelState(null, null, null));
 
@@ -50,7 +40,7 @@ class AppModelStateNotifier extends StateNotifier<AppModelState> {
               initialLocation: '/title',
               routes: [
                 GoRoute(
-                    path: '/title', builder: (context, state) => const Title()),
+                    path: '/title', builder: (context, state) => const AppTitle()),
                 GoRoute(
                     path: '/brightness',
                     pageBuilder: (context, state) {
