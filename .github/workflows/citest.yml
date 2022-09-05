@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - main
-    types: [synchronize]
+    types: [opened, synchronize, reopened]
 
 env:
   FLUTTER_VERSION: '3.0.1'
