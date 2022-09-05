@@ -11,6 +11,9 @@ class AppTitle extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           child: GestureDetector(
               onTap: () => context.go('/brightness'),
-              child: Image.asset('assets/images/malibu_orange_title.png',
-                  fit: BoxFit.cover))));
+              child: Stack(children: [
+                Image.asset('assets/images/malibu_orange_title.png',
+                    fit: BoxFit.cover),
+                const Text('タップしてソクテイ')
+              ]))));
 }
