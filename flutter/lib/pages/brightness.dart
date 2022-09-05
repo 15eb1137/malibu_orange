@@ -77,8 +77,9 @@ class BrightnessView extends ConsumerWidget {
                     : Image.asset('assets/images/midlight.png',
                         fit: BoxFit.cover)
             : Image.asset('assets/images/failed.png', fit: BoxFit.cover);
+    final appBarTitle = workingMode == WorkingMode.work ? '作業モード' : 'おやすみモード';
     return Scaffold(
-      appBar: const AppBarComponent(title: 'お部屋の明るさ測定'),
+      appBar: AppBarComponent(title: appBarTitle),
       body: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
