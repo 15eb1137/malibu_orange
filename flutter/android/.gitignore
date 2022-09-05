@@ -13,3 +13,4 @@ key.properties
 **/*.jks
 service_account_for_pub.json
 encoded_release.txt
+encoded_service_account_for_pub.txt
