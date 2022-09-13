@@ -28,7 +28,7 @@ jobs:
         with:
           name: appbundle
           path: flutter/build/app/outputs/bundle/release
-          workflow: ci.yml
+          workflow: cibuild.yml
       - uses: r0adkll/upload-google-play@v1.0.17
         with:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_KEY_JSON_PLAIN }}
