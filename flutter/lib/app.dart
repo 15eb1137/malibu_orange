@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:malibu_orange/components/ads.dart';
 import 'package:malibu_orange/components/transition.dart';
 import 'package:malibu_orange/pages/brightness.dart';
 import 'package:malibu_orange/pages/title.dart';
@@ -83,6 +84,7 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(adProvider);
     final router = ref.watch(appModelProvider.select((model) => model.router))!;
     return MaterialApp.router(
       title: 'お部屋の明るさ測定',
