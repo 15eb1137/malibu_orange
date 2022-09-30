@@ -15,9 +15,9 @@ class GaugeChart extends ConsumerWidget {
     final colorMain = brightness >= 300
         ? himawari.toColor()
         : brightness >= 50
-            ? himawari.withValue(0.80).toColor()
-            : himawari.withValue(0.60).toColor();
-    const colorSub = Colors.blueGrey;
+            ? himawari.withSaturation(0.60).toColor()
+            : himawari.withSaturation(0.20).toColor();
+    final colorSub = Colors.blueGrey.shade100;
     return SfRadialGauge(axes: <RadialAxis>[
       RadialAxis(
           minimum: 0,
@@ -36,7 +36,8 @@ class GaugeChart extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     children: [
                   Text('${brightness.floor()}',
-                      style: TextStyle(fontSize: 64, color: colorMain)),
+                      style:
+                          TextStyle(fontSize: 64, color: himawari.toColor())),
                   const Text('lx',
                       style: TextStyle(fontSize: 24, color: Colors.blueGrey))
                 ]))

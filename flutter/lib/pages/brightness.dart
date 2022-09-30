@@ -59,19 +59,32 @@ class BrightnessView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appModelController = ref.watch(appModelProvider.notifier);
+    final brightness =
+        ref.watch(brightnessModelProvider.select((model) => model.brightness));
     final ThemeMode themeMode = ref.watch(appModelProvider
         .select((model) => model.themeMode ?? ThemeMode.system));
-    final brightnessModelController =
-        ref.watch(brightnessModelProvider.notifier);
-    //TODO: onPressのボタンに変更
-    ref.watch(brightnessStreamProvider).whenData(
-        (brightness) => brightnessModelController.setBrightness(brightness));
+    const HSVColor himawari = HSVColor.fromAHSV(1.0, 48.0, 1.0, 0.99);
+    void reloadBrightness() =>
+        ref.watch(brightnessStreamProvider.future).then((brightness) => ref
+            .watch(brightnessModelProvider.notifier)
+            .setBrightness(brightness));
+    if (brightness == 0.0) reloadBrightness();
     return Scaffold(
       appBar: const AppBarComponent(title: '部屋の明るさ測定'),
       body: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          child: const GaugeChart()),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const GaugeChart(),
+                MaterialButton(
+                    onPressed: reloadBrightness,
+                    color: himawari.toColor(),
+                    shape: const CircleBorder(),
+                    padding: const EdgeInsets.all(24),
+                    child: const Icon(Icons.replay, color: Colors.blueGrey))
+              ])),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             final bool isDarkModeActive = themeMode == ThemeMode.dark;
