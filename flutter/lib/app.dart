@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:malibu_orange/components/ads.dart';
 import 'package:malibu_orange/components/transition.dart';
 import 'package:malibu_orange/pages/brightness.dart';
-import 'package:malibu_orange/pages/title.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app.freezed.dart';
@@ -38,11 +37,8 @@ class AppModelStateNotifier extends StateNotifier<AppModelState> {
     state = state.copyWith(
         router: router ??
             GoRouter(
-              initialLocation: '/title',
+              initialLocation: '/brightness',
               routes: [
-                GoRoute(
-                    path: '/title',
-                    builder: (context, state) => const AppTitle()),
                 GoRoute(
                     path: '/brightness',
                     pageBuilder: (context, state) {
@@ -63,11 +59,14 @@ class AppModelStateNotifier extends StateNotifier<AppModelState> {
         sharedPreferences: sharedPreferences);
   }
 
-  void setThemeMode() {
+  void setThemeMode(ThemeMode themeMode) {
     final newTheme =
         state.themeMode != ThemeMode.dark ? ThemeMode.dark : ThemeMode.light;
     state = state.copyWith(themeMode: newTheme);
   }
+
+  void setIsDarkMode(bool isDarkModeActive) =>
+      state.sharedPreferences!.setBool('isDarkMode', isDarkModeActive);
 }
 
 @freezed
