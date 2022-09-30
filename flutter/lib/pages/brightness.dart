@@ -62,23 +62,21 @@ class BrightnessView extends ConsumerWidget {
         .select((model) => model.themeMode ?? ThemeMode.system));
     final brightnessModelController =
         ref.watch(brightnessModelProvider.notifier);
+    //TODO: onPressのボタンに変更
     ref.watch(brightnessStreamProvider).whenData(
         (brightness) => brightnessModelController.setBrightness(brightness));
-    final workingMode =
-        ref.watch(brightnessModelProvider.select((model) => model.workingMode));
-    final appBarTitle = workingMode == WorkingMode.work ? '作業モード' : 'おやすみモード';
     return Scaffold(
-      appBar: AppBarComponent(title: appBarTitle),
+      appBar: const AppBarComponent(title: '部屋の明るさ測定'),
       body: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: const GaugeChart()),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            final newWorkingMode = workingMode == WorkingMode.work
-                ? WorkingMode.sleep
-                : WorkingMode.work;
-            brightnessModelController.setWorkingMode(newWorkingMode);
+            final bool isDarkModeActive = themeMode == ThemeMode.dark;
+            appModelController.setThemeMode(
+                isDarkModeActive ? ThemeMode.dark : ThemeMode.light);
+            appModelController.setIsDarkMode(isDarkModeActive);
           },
           child: const Icon(Icons.lightbulb)),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
