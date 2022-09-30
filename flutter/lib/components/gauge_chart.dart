@@ -11,7 +11,6 @@ class GaugeChart extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final double brightness = ref.watch(
         brightnessModelProvider.select((model) => model.brightness ?? 0));
-
     final colorMain = brightness >= 70
         ? Colors.blue
         : brightness >= 50
