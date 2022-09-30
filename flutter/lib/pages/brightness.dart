@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:malibu_orange/components/app_bar.dart';
+import 'package:malibu_orange/components/gauge_chart.dart';
+
+import '../app.dart';
 
 part 'brightness.freezed.dart';
 
@@ -54,36 +57,22 @@ class BrightnessView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final appModelController = ref.watch(appModelProvider.notifier);
+    final ThemeMode themeMode = ref.watch(appModelProvider
+        .select((model) => model.themeMode ?? ThemeMode.system));
     final brightnessModelController =
         ref.watch(brightnessModelProvider.notifier);
-    final isBrightnessSensorAvailable = ref.watch(brightnessModelProvider
-        .select((model) => model.isBrightnessSensorAvailable));
     ref.watch(brightnessStreamProvider).whenData(
         (brightness) => brightnessModelController.setBrightness(brightness));
-    final brightness = ref.watch(
-        brightnessModelProvider.select((model) => model.brightness ?? 0));
     final workingMode =
         ref.watch(brightnessModelProvider.select((model) => model.workingMode));
-    Widget getBrightnessImage() => isBrightnessSensorAvailable == null
-        ? Image.asset('assets/images/loading.png', fit: BoxFit.cover)
-        : isBrightnessSensorAvailable && workingMode != null
-            ? workingMode == WorkingMode.work
-                ? brightness > 300
-                    ? Image.asset('assets/images/bright.png', fit: BoxFit.cover)
-                    : Image.asset('assets/images/middark.png',
-                        fit: BoxFit.cover)
-                : brightness < 50
-                    ? Image.asset('assets/images/dark.png', fit: BoxFit.cover)
-                    : Image.asset('assets/images/midlight.png',
-                        fit: BoxFit.cover)
-            : Image.asset('assets/images/failed.png', fit: BoxFit.cover);
     final appBarTitle = workingMode == WorkingMode.work ? '作業モード' : 'おやすみモード';
     return Scaffold(
       appBar: AppBarComponent(title: appBarTitle),
       body: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          child: getBrightnessImage()),
+          child: const GaugeChart()),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             final newWorkingMode = workingMode == WorkingMode.work

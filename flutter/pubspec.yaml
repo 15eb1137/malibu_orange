@@ -20,6 +20,7 @@ dependencies:
   freezed_annotation: ^2.0.3
   json_annotation: ^4.5.0
   google_fonts: ^2.3.2
+  syncfusion_flutter_gauges: ^20.2.50
   # Ads
   google_mobile_ads: ^1.2.0
   flutter_overboard: ^3.1.1
