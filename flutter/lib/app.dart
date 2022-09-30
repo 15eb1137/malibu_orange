@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:malibu_orange/components/ads.dart';
-import 'package:malibu_orange/components/transition.dart';
 import 'package:malibu_orange/pages/brightness.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,19 +39,9 @@ class AppModelStateNotifier extends StateNotifier<AppModelState> {
               initialLocation: '/brightness',
               routes: [
                 GoRoute(
-                    path: '/brightness',
-                    pageBuilder: (context, state) {
-                      const duration = Duration(seconds: 3);
-                      return CustomTransitionPage(
-                          transitionDuration: duration,
-                          child: const BrightnessView(),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) =>
-                                  Transition(
-                                      duration: duration,
-                                      animation: animation,
-                                      child: child));
-                    }),
+                  path: '/brightness',
+                  builder: (context, state) => const BrightnessView(),
+                ),
               ],
             ),
         themeMode: themeMode,
