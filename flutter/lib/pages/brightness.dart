@@ -2,10 +2,11 @@ import 'package:environment_sensors/environment_sensors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:malibu_orange/components/app_bar.dart';
-import 'package:malibu_orange/components/gauge_chart.dart';
 
 import '../app.dart';
+import '../components/ads.dart';
+import '../components/app_bar.dart';
+import '../components/gauge_chart.dart';
 
 part 'brightness.freezed.dart';
 
@@ -80,6 +81,7 @@ class BrightnessView extends ConsumerWidget {
           },
           child: const Icon(Icons.lightbulb)),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+      bottomNavigationBar: const BannerAdWidget(),
     );
   }
 }

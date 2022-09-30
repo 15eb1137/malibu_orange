@@ -15,202 +15,118 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$AppOpenAdState {
-  bool get isShowingAd => throw _privateConstructorUsedError;
-  Duration get maxCacheDuration => throw _privateConstructorUsedError;
-  DateTime? get appOpenLoadTime => throw _privateConstructorUsedError;
-  AppOpenAd? get appOpenAd => throw _privateConstructorUsedError;
+mixin _$AdState {
+  BannerAd? get bannerAd => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $AppOpenAdStateCopyWith<AppOpenAdState> get copyWith =>
-      throw _privateConstructorUsedError;
+  $AdStateCopyWith<AdState> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AppOpenAdStateCopyWith<$Res> {
-  factory $AppOpenAdStateCopyWith(
-          AppOpenAdState value, $Res Function(AppOpenAdState) then) =
-      _$AppOpenAdStateCopyWithImpl<$Res>;
-  $Res call(
-      {bool isShowingAd,
-      Duration maxCacheDuration,
-      DateTime? appOpenLoadTime,
-      AppOpenAd? appOpenAd});
+abstract class $AdStateCopyWith<$Res> {
+  factory $AdStateCopyWith(AdState value, $Res Function(AdState) then) =
+      _$AdStateCopyWithImpl<$Res>;
+  $Res call({BannerAd? bannerAd});
 }
 
 /// @nodoc
-class _$AppOpenAdStateCopyWithImpl<$Res>
-    implements $AppOpenAdStateCopyWith<$Res> {
-  _$AppOpenAdStateCopyWithImpl(this._value, this._then);
+class _$AdStateCopyWithImpl<$Res> implements $AdStateCopyWith<$Res> {
+  _$AdStateCopyWithImpl(this._value, this._then);
 
-  final AppOpenAdState _value;
+  final AdState _value;
   // ignore: unused_field
-  final $Res Function(AppOpenAdState) _then;
+  final $Res Function(AdState) _then;
 
   @override
   $Res call({
-    Object? isShowingAd = freezed,
-    Object? maxCacheDuration = freezed,
-    Object? appOpenLoadTime = freezed,
-    Object? appOpenAd = freezed,
+    Object? bannerAd = freezed,
   }) {
     return _then(_value.copyWith(
-      isShowingAd: isShowingAd == freezed
-          ? _value.isShowingAd
-          : isShowingAd // ignore: cast_nullable_to_non_nullable
-              as bool,
-      maxCacheDuration: maxCacheDuration == freezed
-          ? _value.maxCacheDuration
-          : maxCacheDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      appOpenLoadTime: appOpenLoadTime == freezed
-          ? _value.appOpenLoadTime
-          : appOpenLoadTime // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      appOpenAd: appOpenAd == freezed
-          ? _value.appOpenAd
-          : appOpenAd // ignore: cast_nullable_to_non_nullable
-              as AppOpenAd?,
+      bannerAd: bannerAd == freezed
+          ? _value.bannerAd
+          : bannerAd // ignore: cast_nullable_to_non_nullable
+              as BannerAd?,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$$_AppOpenAdStateCopyWith<$Res>
-    implements $AppOpenAdStateCopyWith<$Res> {
-  factory _$$_AppOpenAdStateCopyWith(
-          _$_AppOpenAdState value, $Res Function(_$_AppOpenAdState) then) =
-      __$$_AppOpenAdStateCopyWithImpl<$Res>;
+abstract class _$$_AdStateCopyWith<$Res> implements $AdStateCopyWith<$Res> {
+  factory _$$_AdStateCopyWith(
+          _$_AdState value, $Res Function(_$_AdState) then) =
+      __$$_AdStateCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {bool isShowingAd,
-      Duration maxCacheDuration,
-      DateTime? appOpenLoadTime,
-      AppOpenAd? appOpenAd});
+  $Res call({BannerAd? bannerAd});
 }
 
 /// @nodoc
-class __$$_AppOpenAdStateCopyWithImpl<$Res>
-    extends _$AppOpenAdStateCopyWithImpl<$Res>
-    implements _$$_AppOpenAdStateCopyWith<$Res> {
-  __$$_AppOpenAdStateCopyWithImpl(
-      _$_AppOpenAdState _value, $Res Function(_$_AppOpenAdState) _then)
-      : super(_value, (v) => _then(v as _$_AppOpenAdState));
+class __$$_AdStateCopyWithImpl<$Res> extends _$AdStateCopyWithImpl<$Res>
+    implements _$$_AdStateCopyWith<$Res> {
+  __$$_AdStateCopyWithImpl(_$_AdState _value, $Res Function(_$_AdState) _then)
+      : super(_value, (v) => _then(v as _$_AdState));
 
   @override
-  _$_AppOpenAdState get _value => super._value as _$_AppOpenAdState;
+  _$_AdState get _value => super._value as _$_AdState;
 
   @override
   $Res call({
-    Object? isShowingAd = freezed,
-    Object? maxCacheDuration = freezed,
-    Object? appOpenLoadTime = freezed,
-    Object? appOpenAd = freezed,
+    Object? bannerAd = freezed,
   }) {
-    return _then(_$_AppOpenAdState(
-      isShowingAd: isShowingAd == freezed
-          ? _value.isShowingAd
-          : isShowingAd // ignore: cast_nullable_to_non_nullable
-              as bool,
-      maxCacheDuration: maxCacheDuration == freezed
-          ? _value.maxCacheDuration
-          : maxCacheDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      appOpenLoadTime: appOpenLoadTime == freezed
-          ? _value.appOpenLoadTime
-          : appOpenLoadTime // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      appOpenAd: appOpenAd == freezed
-          ? _value.appOpenAd
-          : appOpenAd // ignore: cast_nullable_to_non_nullable
-              as AppOpenAd?,
+    return _then(_$_AdState(
+      bannerAd == freezed
+          ? _value.bannerAd
+          : bannerAd // ignore: cast_nullable_to_non_nullable
+              as BannerAd?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_AppOpenAdState
-    with DiagnosticableTreeMixin
-    implements _AppOpenAdState {
-  const _$_AppOpenAdState(
-      {this.isShowingAd = false,
-      this.maxCacheDuration = const Duration(hours: 4),
-      this.appOpenLoadTime,
-      this.appOpenAd});
+class _$_AdState with DiagnosticableTreeMixin implements _AdState {
+  const _$_AdState(this.bannerAd);
 
   @override
-  @JsonKey()
-  final bool isShowingAd;
-  @override
-  @JsonKey()
-  final Duration maxCacheDuration;
-  @override
-  final DateTime? appOpenLoadTime;
-  @override
-  final AppOpenAd? appOpenAd;
+  final BannerAd? bannerAd;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppOpenAdState(isShowingAd: $isShowingAd, maxCacheDuration: $maxCacheDuration, appOpenLoadTime: $appOpenLoadTime, appOpenAd: $appOpenAd)';
+    return 'AdState(bannerAd: $bannerAd)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'AppOpenAdState'))
-      ..add(DiagnosticsProperty('isShowingAd', isShowingAd))
-      ..add(DiagnosticsProperty('maxCacheDuration', maxCacheDuration))
-      ..add(DiagnosticsProperty('appOpenLoadTime', appOpenLoadTime))
-      ..add(DiagnosticsProperty('appOpenAd', appOpenAd));
+      ..add(DiagnosticsProperty('type', 'AdState'))
+      ..add(DiagnosticsProperty('bannerAd', bannerAd));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AppOpenAdState &&
-            const DeepCollectionEquality()
-                .equals(other.isShowingAd, isShowingAd) &&
-            const DeepCollectionEquality()
-                .equals(other.maxCacheDuration, maxCacheDuration) &&
-            const DeepCollectionEquality()
-                .equals(other.appOpenLoadTime, appOpenLoadTime) &&
-            const DeepCollectionEquality().equals(other.appOpenAd, appOpenAd));
+            other is _$_AdState &&
+            const DeepCollectionEquality().equals(other.bannerAd, bannerAd));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(isShowingAd),
-      const DeepCollectionEquality().hash(maxCacheDuration),
-      const DeepCollectionEquality().hash(appOpenLoadTime),
-      const DeepCollectionEquality().hash(appOpenAd));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(bannerAd));
 
   @JsonKey(ignore: true)
   @override
-  _$$_AppOpenAdStateCopyWith<_$_AppOpenAdState> get copyWith =>
-      __$$_AppOpenAdStateCopyWithImpl<_$_AppOpenAdState>(this, _$identity);
+  _$$_AdStateCopyWith<_$_AdState> get copyWith =>
+      __$$_AdStateCopyWithImpl<_$_AdState>(this, _$identity);
 }
 
-abstract class _AppOpenAdState implements AppOpenAdState {
-  const factory _AppOpenAdState(
-      {final bool isShowingAd,
-      final Duration maxCacheDuration,
-      final DateTime? appOpenLoadTime,
-      final AppOpenAd? appOpenAd}) = _$_AppOpenAdState;
+abstract class _AdState implements AdState {
+  const factory _AdState(final BannerAd? bannerAd) = _$_AdState;
 
   @override
-  bool get isShowingAd;
-  @override
-  Duration get maxCacheDuration;
-  @override
-  DateTime? get appOpenLoadTime;
-  @override
-  AppOpenAd? get appOpenAd;
+  BannerAd? get bannerAd;
   @override
   @JsonKey(ignore: true)
-  _$$_AppOpenAdStateCopyWith<_$_AppOpenAdState> get copyWith =>
+  _$$_AdStateCopyWith<_$_AdState> get copyWith =>
       throw _privateConstructorUsedError;
 }
