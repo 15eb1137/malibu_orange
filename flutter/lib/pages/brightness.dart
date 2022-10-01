@@ -71,20 +71,28 @@ class BrightnessView extends ConsumerWidget {
     if (brightness == 0.0) reloadBrightness();
     return Scaffold(
       appBar: const AppBarComponent(title: '部屋の明るさ測定'),
-      body: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const GaugeChart(),
-                MaterialButton(
-                    onPressed: reloadBrightness,
-                    color: himawari.toColor(),
-                    shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(24),
-                    child: const Icon(Icons.replay, color: Colors.blueGrey))
-              ])),
+      body: Stack(alignment: Alignment.bottomCenter, children: [
+        SizedBox(
+            width: MediaQuery.of(context).size.width / 1.5,
+            height: MediaQuery.of(context).size.height / 1.5,
+            child: const Image(
+                image: AssetImage('assets/images/himawari.png'),
+                fit: BoxFit.cover)),
+        SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const GaugeChart(),
+                  MaterialButton(
+                      onPressed: reloadBrightness,
+                      color: himawari.toColor(),
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(24),
+                      child: const Icon(Icons.replay, color: Colors.blueGrey))
+                ])),
+      ]),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             final bool isDarkModeActive = themeMode == ThemeMode.dark;
