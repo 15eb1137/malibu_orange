@@ -9,21 +9,15 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 part 'ads.freezed.dart';
 // part 'ads.g.dart';
 
-final screenWidthProvider = StateProvider((ref) => 320);
-final bannerAdSizeProvider = FutureProvider((ref) async =>
-    await AdSize.getAnchoredAdaptiveBannerAdSize(
-        Orientation.portrait, ref.watch(screenWidthProvider)));
-
-final adProvider = StateNotifierProvider<AdStateNotifier, AdState>((ref) =>
-    AdStateNotifier()
-      ..init(ref.watch(bannerAdSizeProvider).value ?? AdSize.banner));
+final adProvider = StateNotifierProvider<AdStateNotifier, AdState>(
+    (ref) => AdStateNotifier()..init());
 
 class AdStateNotifier extends StateNotifier<AdState> {
   AdStateNotifier() : super(const AdState(null));
 
-  void init(AdSize bannerAdSize) => state = state.copyWith(
+  void init() => state = state.copyWith(
           bannerAd: BannerAd(
-        size: bannerAdSize,
+        size: AdSize.banner,
         adUnitId: bannerAdUnitId,
         listener: const BannerAdListener(),
         request: const AdRequest(),
