@@ -20,9 +20,23 @@ class GaugeChart extends ConsumerWidget {
             ? himawari.withSaturation(0.60).toColor()
             : himawari.withSaturation(0.20).toColor();
     final colorSub = Colors.blueGrey.shade100;
-    double logit(num x) =>
-        (log(x / (1500 - x)) / log(1.11)) +
-        50; //1 / (1 + pow(1.07, -x + 100 / 2));
+    double logit(num x) => (log(x / (1500 - x)) / log(1.11)) + 50;
+    List<GaugePointer> labelPointer(double value, String label) {
+      return [
+        MarkerPointer(
+            markerType: MarkerType.text,
+            value: logit(value),
+            text: label,
+            textStyle: const GaugeTextStyle(color: Colors.grey),
+            offsetUnit: GaugeSizeUnit.factor,
+            markerOffset: -0.1),
+        MarkerPointer(
+            markerType: MarkerType.invertedTriangle,
+            value: logit(value),
+            color: Colors.deepOrange)
+      ];
+    }
+
     final List<RadialAxis> axes = brightness > 1
         ? <RadialAxis>[
             RadialAxis(
@@ -50,83 +64,13 @@ class GaugeChart extends ConsumerWidget {
                   )
                 ],
                 pointers: <GaugePointer>[
-                  MarkerPointer(
-                      markerType: MarkerType.text,
-                      value: logit(20),
-                      text: '睡眠',
-                      textStyle: const GaugeTextStyle(color: Colors.grey),
-                      offsetUnit: GaugeSizeUnit.factor,
-                      markerOffset: -0.1),
-                  MarkerPointer(
-                      markerType: MarkerType.invertedTriangle,
-                      value: logit(20),
-                      color: Colors.deepOrange),
-                  MarkerPointer(
-                      markerType: MarkerType.text,
-                      value: logit(75),
-                      text: 'トイレ',
-                      textStyle: const GaugeTextStyle(color: Colors.grey),
-                      offsetUnit: GaugeSizeUnit.factor,
-                      markerOffset: -0.1),
-                  MarkerPointer(
-                      markerType: MarkerType.invertedTriangle,
-                      value: logit(75),
-                      color: Colors.deepOrange),
-                  MarkerPointer(
-                      markerType: MarkerType.text,
-                      value: logit(200),
-                      text: 'テレビ',
-                      textStyle: const GaugeTextStyle(color: Colors.grey),
-                      offsetUnit: GaugeSizeUnit.factor,
-                      markerOffset: -0.1),
-                  MarkerPointer(
-                      markerType: MarkerType.invertedTriangle,
-                      value: logit(200),
-                      color: Colors.deepOrange),
-                  MarkerPointer(
-                      markerType: MarkerType.text,
-                      value: logit(300),
-                      text: '料理',
-                      textStyle: const GaugeTextStyle(color: Colors.grey),
-                      offsetUnit: GaugeSizeUnit.factor,
-                      markerOffset: -0.1),
-                  MarkerPointer(
-                      markerType: MarkerType.invertedTriangle,
-                      value: logit(300),
-                      color: Colors.deepOrange),
-                  MarkerPointer(
-                      markerType: MarkerType.text,
-                      value: logit(400),
-                      text: 'PC',
-                      textStyle: const GaugeTextStyle(color: Colors.grey),
-                      offsetUnit: GaugeSizeUnit.factor,
-                      markerOffset: -0.1),
-                  MarkerPointer(
-                      markerType: MarkerType.invertedTriangle,
-                      value: logit(400),
-                      color: Colors.deepOrange),
-                  MarkerPointer(
-                      markerType: MarkerType.text,
-                      value: logit(700),
-                      text: '字書き',
-                      textStyle: const GaugeTextStyle(color: Colors.grey),
-                      offsetUnit: GaugeSizeUnit.factor,
-                      markerOffset: -0.1),
-                  MarkerPointer(
-                      markerType: MarkerType.invertedTriangle,
-                      value: logit(700),
-                      color: Colors.deepOrange),
-                  MarkerPointer(
-                      markerType: MarkerType.text,
-                      value: logit(1000),
-                      text: '裁縫',
-                      textStyle: const GaugeTextStyle(color: Colors.grey),
-                      offsetUnit: GaugeSizeUnit.factor,
-                      markerOffset: -0.1),
-                  MarkerPointer(
-                      markerType: MarkerType.invertedTriangle,
-                      value: logit(1000),
-                      color: Colors.deepOrange)
+                  ...labelPointer(20, '睡眠'),
+                  ...labelPointer(75, 'トイレ'),
+                  ...labelPointer(200, 'テレビ'),
+                  ...labelPointer(300, '料理'),
+                  ...labelPointer(400, 'PC'),
+                  ...labelPointer(700, '字書き'),
+                  ...labelPointer(1000, '裁縫'),
                 ],
                 annotations: <GaugeAnnotation>[
                   GaugeAnnotation(
