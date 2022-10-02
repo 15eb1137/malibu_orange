@@ -2,7 +2,11 @@ import 'package:environment_sensors/environment_sensors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:malibu_orange/components/app_bar.dart';
+
+import '../app.dart';
+import '../components/ads.dart';
+import '../components/app_bar.dart';
+import '../components/gauge_chart.dart';
 
 part 'brightness.freezed.dart';
 
@@ -54,45 +58,51 @@ class BrightnessView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final brightnessModelController =
-        ref.watch(brightnessModelProvider.notifier);
-    final isBrightnessSensorAvailable = ref.watch(brightnessModelProvider
-        .select((model) => model.isBrightnessSensorAvailable));
-    ref.watch(brightnessStreamProvider).whenData(
-        (brightness) => brightnessModelController.setBrightness(brightness));
-    final brightness = ref.watch(
-        brightnessModelProvider.select((model) => model.brightness ?? 0));
-    final workingMode =
-        ref.watch(brightnessModelProvider.select((model) => model.workingMode));
-    Widget getBrightnessImage() => isBrightnessSensorAvailable == null
-        ? Image.asset('assets/images/loading.png', fit: BoxFit.cover)
-        : isBrightnessSensorAvailable && workingMode != null
-            ? workingMode == WorkingMode.work
-                ? brightness > 300
-                    ? Image.asset('assets/images/bright.png', fit: BoxFit.cover)
-                    : Image.asset('assets/images/middark.png',
-                        fit: BoxFit.cover)
-                : brightness < 50
-                    ? Image.asset('assets/images/dark.png', fit: BoxFit.cover)
-                    : Image.asset('assets/images/midlight.png',
-                        fit: BoxFit.cover)
-            : Image.asset('assets/images/failed.png', fit: BoxFit.cover);
-    final appBarTitle = workingMode == WorkingMode.work ? '作業モード' : 'おやすみモード';
+    final appModelController = ref.watch(appModelProvider.notifier);
+    final brightness =
+        ref.watch(brightnessModelProvider.select((model) => model.brightness));
+    final ThemeMode themeMode = ref.watch(appModelProvider
+        .select((model) => model.themeMode ?? ThemeMode.system));
+    const HSVColor himawari = HSVColor.fromAHSV(1.0, 48.0, 1.0, 0.99);
+    void reloadBrightness() =>
+        ref.watch(brightnessStreamProvider.future).then((brightness) => ref
+            .watch(brightnessModelProvider.notifier)
+            .setBrightness(brightness));
+    if (brightness == 0.0) reloadBrightness();
     return Scaffold(
-      appBar: AppBarComponent(title: appBarTitle),
-      body: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: getBrightnessImage()),
+      appBar: const AppBarComponent(title: '部屋の明るさ測定'),
+      body: Stack(alignment: Alignment.bottomRight, children: [
+        SizedBox(
+            width: MediaQuery.of(context).size.width / 3,
+            height: MediaQuery.of(context).size.height / 3,
+            child: const Image(
+                image: AssetImage('assets/images/himawari.png'),
+                fit: BoxFit.cover)),
+        SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const GaugeChart(),
+                  MaterialButton(
+                      onPressed: reloadBrightness,
+                      color: himawari.toColor(),
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(24),
+                      child: const Icon(Icons.replay, color: Colors.blueGrey))
+                ])),
+      ]),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            final newWorkingMode = workingMode == WorkingMode.work
-                ? WorkingMode.sleep
-                : WorkingMode.work;
-            brightnessModelController.setWorkingMode(newWorkingMode);
+            final bool isDarkModeActive = themeMode == ThemeMode.dark;
+            appModelController.setThemeMode(
+                isDarkModeActive ? ThemeMode.dark : ThemeMode.light);
+            appModelController.setIsDarkMode(isDarkModeActive);
           },
           child: const Icon(Icons.lightbulb)),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+      bottomNavigationBar: const BannerAdWidget(),
     );
   }
 }

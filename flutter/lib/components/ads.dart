@@ -9,115 +9,56 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 part 'ads.freezed.dart';
 // part 'ads.g.dart';
 
-final adProvider =
-    StateNotifierProvider<AppOpenAdStateNotifier, AppOpenAdState>((ref) {
-  final ad = AppOpenAdStateNotifier()..loadAd();
-  WidgetsBinding.instance.addObserver(AppLifecycleReactor(ad: ad));
-  return ad;
-});
+final adProvider = StateNotifierProvider<AdStateNotifier, AdState>(
+    (ref) => AdStateNotifier()..init());
 
-class AppOpenAdStateNotifier extends StateNotifier<AppOpenAdState> {
-  AppOpenAdStateNotifier()
-      : super(const AppOpenAdState(appOpenAd: null, appOpenLoadTime: null));
+class AdStateNotifier extends StateNotifier<AdState> {
+  AdStateNotifier() : super(const AdState(null));
 
-  void loadAd() {
-    AppOpenAd.load(
-      adUnitId: adUnitId,
-      orientation: AppOpenAd.orientationPortrait,
-      request: const AdRequest(),
-      adLoadCallback: AppOpenAdLoadCallback(
-        onAdLoaded: (ad) {
-          debugPrint('Ad loaded.');
-          state =
-              state.copyWith(appOpenAd: ad, appOpenLoadTime: DateTime.now());
-        },
-        onAdFailedToLoad: (error) {
-          debugPrint('AppOpenAd failed to load: ${error.toString()}');
-        },
-      ),
-    );
-  }
+  void init() => state = state.copyWith(
+          bannerAd: BannerAd(
+        size: AdSize.banner,
+        adUnitId: bannerAdUnitId,
+        listener: const BannerAdListener(),
+        request: const AdRequest(),
+      )..load());
 
-  void showAdIfAvailable() {
-    if (!isAdAvailable) {
-      debugPrint('Tried to show ad before available.');
-      loadAd();
-      return;
-    }
-    if (state.isShowingAd) {
-      debugPrint('Tried to show ad while already showing an ad.');
-      return;
-    }
-    if (DateTime.now()
-        .subtract(state.maxCacheDuration)
-        .isAfter(state.appOpenLoadTime!)) {
-      debugPrint('Maximum cache duration exceeded. Loading another ad.');
-      state.appOpenAd!.dispose();
-      state = state.copyWith(appOpenAd: null);
-      loadAd();
-      return;
-    }
-    // Set the fullScreenContentCallback and show the ad.
-    state.appOpenAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (ad) {
-        state = state.copyWith(isShowingAd: true);
-        debugPrint('$ad onAdShowedFullScreenContent');
-      },
-      onAdFailedToShowFullScreenContent: (ad, error) {
-        debugPrint('$ad onAdFailedToShowFullScreenContent: $error');
-        state = state.copyWith(isShowingAd: false);
-        ad.dispose();
-        state = state.copyWith(appOpenAd: null);
-      },
-      onAdDismissedFullScreenContent: (ad) {
-        debugPrint('$ad onAdDismissedFullScreenContent');
-        state = state.copyWith(isShowingAd: false);
-        ad.dispose();
-        state = state.copyWith(appOpenAd: null);
-        loadAd();
-      },
-    );
-  }
-
-  bool get isAdAvailable {
-    return state.appOpenAd != null;
-  }
-
-  String get adUnitId {
+  String get bannerAdUnitId {
     if (kDebugMode) {
       return Platform.isAndroid
-          ? 'ca-app-pub-3940256099942544/3419835294'
-          : 'ca-app-pub-3940256099942544/5662855259';
+          ? 'ca-app-pub-3940256099942544/6300978111'
+          : 'ca-app-pub-3940256099942544/2934735716';
     }
 
     if (Platform.isAndroid) {
-      return 'ca-app-pub-';
+      return 'ca-app-pub-8835706365570627/4432028709';
     } else if (Platform.isIOS) {
       throw UnsupportedError("Unsupported platform");
     } else {
-      return 'ca-app-pub-3940256099942544/3419835294';
+      return 'ca-app-pub-3940256099942544/6300978111';
     }
   }
 }
 
 @freezed
-class AppOpenAdState with _$AppOpenAdState {
-  const factory AppOpenAdState(
-      {@Default(false) bool isShowingAd,
-      @Default(Duration(hours: 4)) Duration maxCacheDuration,
-      DateTime? appOpenLoadTime,
-      AppOpenAd? appOpenAd}) = _AppOpenAdState;
+class AdState with _$AdState {
+  const factory AdState(BannerAd? bannerAd) = _AdState;
 }
 
-class AppLifecycleReactor extends WidgetsBindingObserver {
-  final AppOpenAdStateNotifier ad;
-
-  AppLifecycleReactor({required this.ad});
+class BannerAdWidget extends ConsumerWidget {
+  const BannerAdWidget({Key? key}) : super(key: key);
 
   @override
-  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (state == AppLifecycleState.resumed) {
-      ad.showAdIfAvailable();
-    }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final BannerAd bannerAd = ref.watch(adProvider).bannerAd!;
+    return Container(
+      height: 70,
+      color: Colors.transparent,
+      child: SizedBox(
+        width: bannerAd.size.width.toDouble(),
+        height: bannerAd.size.height.toDouble(),
+        child: AdWidget(ad: bannerAd),
+      ),
+    );
   }
 }

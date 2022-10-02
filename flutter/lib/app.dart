@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
-import 'package:malibu_orange/components/ads.dart';
-import 'package:malibu_orange/components/transition.dart';
-import 'package:malibu_orange/pages/brightness.dart';
-import 'package:malibu_orange/pages/title.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../components/ads.dart';
+import '../pages/brightness.dart';
 
 part 'app.freezed.dart';
 
@@ -38,36 +37,26 @@ class AppModelStateNotifier extends StateNotifier<AppModelState> {
     state = state.copyWith(
         router: router ??
             GoRouter(
-              initialLocation: '/title',
+              initialLocation: '/brightness',
               routes: [
                 GoRoute(
-                    path: '/title',
-                    builder: (context, state) => const AppTitle()),
-                GoRoute(
-                    path: '/brightness',
-                    pageBuilder: (context, state) {
-                      const duration = Duration(seconds: 3);
-                      return CustomTransitionPage(
-                          transitionDuration: duration,
-                          child: const BrightnessView(),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) =>
-                                  Transition(
-                                      duration: duration,
-                                      animation: animation,
-                                      child: child));
-                    }),
+                  path: '/brightness',
+                  builder: (context, state) => const BrightnessView(),
+                ),
               ],
             ),
         themeMode: themeMode,
         sharedPreferences: sharedPreferences);
   }
 
-  void setThemeMode() {
+  void setThemeMode(ThemeMode themeMode) {
     final newTheme =
         state.themeMode != ThemeMode.dark ? ThemeMode.dark : ThemeMode.light;
     state = state.copyWith(themeMode: newTheme);
   }
+
+  void setIsDarkMode(bool isDarkModeActive) =>
+      state.sharedPreferences!.setBool('isDarkMode', isDarkModeActive);
 }
 
 @freezed

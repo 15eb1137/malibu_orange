@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:malibu_orange/app.dart';
-// import 'package:flutter/rendering.dart';
+
+import '../app.dart';
 
 void main() async {
   if (!kIsWeb) _setTargetPlatformForDesktop();
@@ -22,7 +23,7 @@ class AppLoading extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading =
         ref.watch(appModelProvider.select((model) => model.router)) == null;
-    return isLoading ? Container(color: const Color(0xFFd8f3c8)) : const App();
+    return isLoading ? Container(color: const Color(0xFFfce897)) : const App();
   }
 }
 
