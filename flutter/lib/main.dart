@@ -23,7 +23,7 @@ class AppLoading extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading =
         ref.watch(appModelProvider.select((model) => model.router)) == null;
-    return isLoading ? Container(color: const Color(0xFFd8f3c8)) : const App();
+    return isLoading ? Container(color: const Color(0xFFfce897)) : const App();
   }
 }
 
