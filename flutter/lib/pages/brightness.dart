@@ -71,10 +71,10 @@ class BrightnessView extends ConsumerWidget {
     if (brightness == 0.0) reloadBrightness();
     return Scaffold(
       appBar: const AppBarComponent(title: '部屋の明るさ測定'),
-      body: Stack(alignment: Alignment.bottomCenter, children: [
+      body: Stack(alignment: Alignment.bottomRight, children: [
         SizedBox(
-            width: MediaQuery.of(context).size.width / 1.5,
-            height: MediaQuery.of(context).size.height / 1.5,
+            width: MediaQuery.of(context).size.width / 3,
+            height: MediaQuery.of(context).size.height / 3,
             child: const Image(
                 image: AssetImage('assets/images/himawari.png'),
                 fit: BoxFit.cover)),
