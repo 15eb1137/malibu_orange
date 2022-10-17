@@ -3,7 +3,7 @@ description: descriptions
 publish_to: 'none'
 version: 1.0.1+6
 environment:
-  sdk: ">=2.17.1 <3.0.0"
+  sdk: ">=2.18.0 <3.0.0"
 dependencies:
   flutter:
     sdk: flutter
