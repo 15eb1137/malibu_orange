@@ -9,13 +9,18 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   # Firebase
+  firebase_core: ^1.18.0
   firebase_analytics: ^9.1.10
   flutter_riverpod: ^1.0.0
   freezed_annotation: ^2.0.3
   json_annotation: ^4.5.0
   syncfusion_flutter_gauges: ^20.2.50
   # Ads
-  google_mobile_ads: ^1.3.0
+  google_mobile_ads:
+    git:
+      url: https://github.com/googleads/googleads-mobile-flutter
+      ref: 356875362ddb2ac2e0056385d2729c093722fb8d
+      path: packages/google_mobile_ads
   flutter_native_splash: ^2.1.6
   flutter_launcher_icons: ^0.10.0
   go_router: ^3.1.0
