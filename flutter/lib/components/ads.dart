@@ -33,7 +33,7 @@ class AdStateNotifier extends StateNotifier<AdState> {
     if (Platform.isAndroid) {
       return 'ca-app-pub-8835706365570627/4432028709';
     } else if (Platform.isIOS) {
-      throw UnsupportedError("Unsupported platform");
+      return 'ca-app-pub-8835706365570627/4639091421';
     } else {
       return 'ca-app-pub-3940256099942544/6300978111';
     }
