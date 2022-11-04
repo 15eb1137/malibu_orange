@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -11,9 +12,16 @@ class GaugeChart extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final double? brightness =
-        ref.watch(brightnessModelProvider.select((model) => model.brightness));
-    if (brightness != null) {
+    final double brightness = ref.watch(
+            brightnessModelProvider.select((model) => model.brightness)) ??
+        0.0;
+    final bool isBrightnessSensorAvailable = ref.watch(brightnessModelProvider
+            .select((model) => model.isBrightnessSensorAvailable)) ??
+        false;
+    if (kDebugMode) {
+      print('brightness: $brightness, available: $isBrightnessSensorAvailable');
+    }
+    if (isBrightnessSensorAvailable && (brightness != 0.0)) {
       const HSVColor himawari = HSVColor.fromAHSV(1.0, 48.0, 1.0, 0.99);
       final colorMain = brightness >= 300
           ? himawari.toColor()
